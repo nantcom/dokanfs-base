@@ -15,13 +15,31 @@ namespace NC.DokanFS
         /// </summary>
         string Id { get; }
 
-        void CleanUp();
+        /// <summary>
+        /// Volume Label (shown in Explorer)
+        /// </summary>
+        string VolumeLabel { get; }
+
+        /// <summary>
+        /// Name of the file system to show in explorer
+        /// </summary>
+        string FileSystemName { get; }
+
+        /// <summary>
+        /// Gets the file system features
+        /// </summary>
+        FileSystemFeatures FileSystemFeatures { get; }
+
+        /// <summary>
+        /// Max Path Length, should be 256
+        /// </summary>
+        uint MaximumComponentLength { get; }
 
         /// <summary>
         /// Gets this system's path from given OS Path
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="osPath">Path as specified by OS</param>
+        /// <returns>osPath converted to current systen's path format - which will be used as parameters in all other functions that accept path</returns>
         string GetPath(string osPath);
 
         /// <summary>

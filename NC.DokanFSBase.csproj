@@ -14,7 +14,7 @@
     <Description>This Library is a shortcut to create new user-mode file system using Dokan Library. The code is based on MirrorFS sample from Dokan-net repository</Description>
     <PackageProjectUrl>https://github.com/nantcom/dokanfs-base</PackageProjectUrl>
     <PackageTags>dokan, c#</PackageTags>
-    <PackageId>NC-DokanBase</PackageId>
+    <PackageId>NC-DokanFsBase</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

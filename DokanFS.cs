@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
+using System.Threading;
 using DokanNet;
 using DokanNet.Logging;
 using static DokanNet.FormatProviders;
@@ -37,6 +38,8 @@ namespace NC.DokanFS
             _Logger = new ConsoleLogger(loggingName);
         }
 
+        private string _LastMountPoint;
+
         /// <summary>
         /// Mount this file system
         /// </summary>
@@ -59,7 +62,21 @@ namespace NC.DokanFS
                 opt &= DokanOptions.MountManager;
             }
 
-            this.Mount(mountPoint, opt, threads);
+            _LastMountPoint = mountPoint;
+
+            Thread t = new Thread((o) =>
+            {
+                this.Mount(mountPoint, opt, threads);
+            });
+            t.Start();
+        }
+
+        /// <summary>
+        /// Remove the last used mount point of this instance
+        /// </summary>
+        public void Unmount()
+        {
+            Dokan.RemoveMountPoint(_LastMountPoint);
         }
 
         /// <summary>
@@ -602,11 +619,11 @@ namespace NC.DokanFS
         public NtStatus GetVolumeInformation(out string volumeLabel, out FileSystemFeatures features,
             out string fileSystemName, out uint maximumComponentLength, IDokanFileInfo info)
         {
-            volumeLabel = "NC Cloud Space Beta";
-            fileSystemName = "NC Cloud Space Beta";
-            maximumComponentLength = 256;
+            volumeLabel = _Backend.VolumeLabel;
+            fileSystemName = _Backend.FileSystemName;
+            maximumComponentLength = _Backend.MaximumComponentLength;
 
-            features = FileSystemFeatures.VolumeIsCompressed;
+            features = _Backend.FileSystemFeatures;
 
             return Trace(nameof(GetVolumeInformation), null, info, DokanResult.Success, "out " + volumeLabel,
                 "out " + features.ToString(), "out " + fileSystemName);

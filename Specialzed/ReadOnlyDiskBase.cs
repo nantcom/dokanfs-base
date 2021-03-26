@@ -22,6 +22,14 @@ namespace NC.DokanFS.Specialized
         /// </summary>
         public abstract long TotalSize { get; }
 
+        public abstract string VolumeLabel { get; }
+
+        public abstract string FileSystemName { get; }
+
+        public abstract FileSystemFeatures FileSystemFeatures { get;  }
+
+        public abstract uint MaximumComponentLength { get;  }
+
         public abstract void CleanUp();
 
         protected abstract IDokanFileContext FileContextFactory();
