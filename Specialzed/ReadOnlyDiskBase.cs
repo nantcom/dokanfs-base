@@ -7,20 +7,24 @@ using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NC.DokanFS
+namespace NC.DokanFS.Specialized
 {
     /// <summary>
     /// Base ReadOnly Disk which throws UnauthorizedAccessException for all writing operations
     /// </summary>
     public abstract class ReadOnlyDiskBase<T> : IDokanDisk
-        where T : ReadOnlyFileContextBase, new()
+        where T : ReadOnlyFileContextBase
     {
+        public abstract string Id { get; }
+
         /// <summary>
         /// Disk size to show
         /// </summary>
         public abstract long TotalSize { get; }
 
         public abstract void CleanUp();
+
+        protected abstract IDokanFileContext FileContextFactory();
 
         public virtual IDokanFileContext CreateFileContext(string path, FileMode mode, System.IO.FileAccess access, FileShare share = FileShare.None, FileOptions options = FileOptions.None)
         {
@@ -39,7 +43,7 @@ namespace NC.DokanFS
                 throw new UnauthorizedAccessException();
             }
 
-            return new T();
+            return FileContextFactory();
         }
 
         public abstract bool GetFileInfo(string path, out FileInformation fi);
@@ -111,6 +115,16 @@ namespace NC.DokanFS
         public IDokanFile Touch(string path, FileAttributes attributes)
         {
             throw new UnauthorizedAccessException();
+        }
+
+        public void UpdateFileInformation(IDokanFile file)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateDirectoryInformation(IDokanDirectory dir)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

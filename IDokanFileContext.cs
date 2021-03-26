@@ -9,6 +9,16 @@ namespace NC.DokanFS
     public interface IDokanFileContext : IDisposable
     {
         /// <summary>
+        /// Disk which own this context
+        /// </summary>
+        IDokanDisk Disk { get; }
+
+        /// <summary>
+        /// File Related to this context
+        /// </summary>
+        IDokanFile File { get; }
+
+        /// <summary>
         /// Read data into given buffer at given offset
         /// </summary>
         /// <param name="buffer"></param>

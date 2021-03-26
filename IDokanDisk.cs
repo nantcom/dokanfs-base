@@ -10,6 +10,11 @@ namespace NC.DokanFS
 {
     public interface IDokanDisk
     {
+        /// <summary>
+        /// Disk Unique Identifier
+        /// </summary>
+        string Id { get; }
+
         void CleanUp();
 
         /// <summary>
@@ -146,6 +151,17 @@ namespace NC.DokanFS
         /// <returns>IDokanFile which represents the created file</returns>
         NC.DokanFS.IDokanFile Touch(string path, FileAttributes attributes);
 
+        /// <summary>
+        /// Update file information
+        /// </summary>
+        /// <param name="file"></param>
+        void UpdateFileInformation(IDokanFile file);
+
+        /// <summary>
+        /// Update directory information
+        /// </summary>
+        /// <param name="file"></param>
+        void UpdateDirectoryInformation(IDokanDirectory dir);
     }
 
 }

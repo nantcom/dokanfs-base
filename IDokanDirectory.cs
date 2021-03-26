@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NC.DokanFS
 {
-    interface IDokanDirectory
+    public interface IDokanDirectory
     {
         /// <summary>
         /// Directory information for this directory, should have Directory Bit set

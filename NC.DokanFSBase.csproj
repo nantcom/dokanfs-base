@@ -1,12 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>NC.DokanFS</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <Authors>Jirawat Padungkijjanont</Authors>
+    <Company>NantCom Co., Ltd.</Company>
+    <Copyright>2021 NantCom Co., Ltd.</Copyright>
+    <RepositoryUrl>https://github.com/nantcom/dokanfs-base</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageReleaseNotes>Initial Release</PackageReleaseNotes>
+    <Description>This Library is a shortcut to create new user-mode file system using Dokan Library. The code is based on MirrorFS sample from Dokan-net repository</Description>
+    <PackageProjectUrl>https://github.com/nantcom/dokanfs-base</PackageProjectUrl>
+    <PackageTags>dokan, c#</PackageTags>
+    <PackageId>NC-DokanBase</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="DokanNet" Version="1.4.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

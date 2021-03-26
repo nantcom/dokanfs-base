@@ -12,6 +12,11 @@ namespace NC.DokanFS
         /// <summary>
         /// File information for this file
         /// </summary>
-        FileInformation FileInformation { get; }
+        FileInformation FileInformation { get; set; }
+
+        /// <summary>
+        /// Unique Identifier of this file
+        /// </summary>
+        string Id { get; set; }
     }
 }

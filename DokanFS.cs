@@ -305,21 +305,31 @@ namespace NC.DokanFS
 
         public NtStatus ReadFile(string fileName, byte[] buffer, out int bytesRead, long offset, IDokanFileInfo info)
         {
-            if (info.Context == null) // memory mapped read
+            try
             {
-                using (var mx = _Backend.CreateFileContext(GetPath(fileName), FileMode.Open, System.IO.FileAccess.Read))
+                if (info.Context == null) // memory mapped read
                 {
-                    bytesRead = mx.Read(buffer, offset);
+                    using (var mx = _Backend.CreateFileContext(GetPath(fileName), FileMode.Open, System.IO.FileAccess.Read))
+                    {
+                        bytesRead = mx.Read(buffer, offset);
+                    }
+                }
+                else // normal read
+                {
+                    var mx = info.Context as IDokanFileContext;
+                    lock (mx) //Protect from overlapped read
+                    {
+                        bytesRead = mx.Read(buffer, offset);
+                    }
                 }
             }
-            else // normal read
+            catch (Exception)
             {
-                var mx = info.Context as IDokanFileContext;
-                lock (mx) //Protect from overlapped read
-                {
-                    bytesRead = mx.Read(buffer, offset);
-                }
+                bytesRead = 0;
+                return Trace(nameof(ReadFile), fileName, info, DokanResult.InvalidParameter, "0",
+                    offset.ToString(CultureInfo.InvariantCulture));
             }
+
             return Trace(nameof(ReadFile), fileName, info, DokanResult.Success, "out " + bytesRead.ToString(),
                 offset.ToString(CultureInfo.InvariantCulture));
         }
