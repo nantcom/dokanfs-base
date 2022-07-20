@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>NC.DokanFS</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Authors>Jirawat Padungkijjanont</Authors>
     <Company>NantCom Co., Ltd.</Company>
     <Copyright>2021 NantCom Co., Ltd.</Copyright>
