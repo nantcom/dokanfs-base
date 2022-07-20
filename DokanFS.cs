@@ -40,44 +40,44 @@ namespace NC.DokanFS
 
         private string _LastMountPoint;
 
-        /// <summary>
-        /// Mount this file system
-        /// </summary>
-        /// <param name="mountPoint">Mount point, can be drive letter or folder</param>
-        /// <param name="readOnly">whether the drive will have WriteProtection flag set</param>
-        /// <param name="fixedDisk">whether the drive will have FixedDrive flag set</param>
-        /// <param name="useMountManager">whether to use MountManager option</param>
-        /// <param name="threads">number of threads, default is 64</param>
-        public void Mount( string mountPoint, bool readOnly = false, bool fixedDisk = false, bool useMountManager = false, int threads = 64 )
-        {
-            DokanOptions opt = fixedDisk ? DokanOptions.FixedDrive : DokanOptions.RemovableDrive;
+        ///// <summary>
+        ///// Mount this file system
+        ///// </summary>
+        ///// <param name="mountPoint">Mount point, can be drive letter or folder</param>
+        ///// <param name="readOnly">whether the drive will have WriteProtection flag set</param>
+        ///// <param name="fixedDisk">whether the drive will have FixedDrive flag set</param>
+        ///// <param name="useMountManager">whether to use MountManager option</param>
+        ///// <param name="threads">number of threads, default is 64</param>
+        //public void Mount( string mountPoint, bool readOnly = false, bool fixedDisk = false, bool useMountManager = false, int threads = 64 )
+        //{
+        //    DokanOptions opt = fixedDisk ? DokanOptions.FixedDrive : DokanOptions.RemovableDrive;
 
-            if (readOnly)
-            {
-                opt &= DokanOptions.WriteProtection;
-            }
+        //    if (readOnly)
+        //    {
+        //        opt &= DokanOptions.WriteProtection;
+        //    }
 
-            if (useMountManager)
-            {
-                opt &= DokanOptions.MountManager;
-            }
+        //    if (useMountManager)
+        //    {
+        //        opt &= DokanOptions.MountManager;
+        //    }
 
-            _LastMountPoint = mountPoint;
+        //    _LastMountPoint = mountPoint;
 
-            Thread t = new Thread((o) =>
-            {
-                this.Mount(mountPoint, opt, threads);
-            });
-            t.Start();
-        }
+        //    Thread t = new Thread((o) =>
+        //    {
+        //        this.Mount(mountPoint, opt, threads);
+        //    });
+        //    t.Start();
+        //}
 
-        /// <summary>
-        /// Remove the last used mount point of this instance
-        /// </summary>
-        public void Unmount()
-        {
-            Dokan.RemoveMountPoint(_LastMountPoint);
-        }
+        ///// <summary>
+        ///// Remove the last used mount point of this instance
+        ///// </summary>
+        //public void Unmount()
+        //{
+        //    Dokan.RemoveMountPoint(_LastMountPoint);
+        //}
 
         /// <summary>
         /// Convert OS path into Backend Path
@@ -673,6 +673,11 @@ namespace NC.DokanFS
             files = _Backend.FindFiles(fileName, searchPattern);
 
             return Trace(nameof(FindFilesWithPattern), fileName, info, DokanResult.Success);
+        }
+
+        public NtStatus Mounted(string mountPoint, IDokanFileInfo info)
+        {
+            return DokanResult.Success;
         }
 
         #endregion Implementation of IDokanOperations
